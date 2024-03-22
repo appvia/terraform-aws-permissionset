@@ -1,8 +1,4 @@
 #
-## Related to provisioning an permissionset
-#
-
-#
 ## Define the permissionset 
 #
 resource "aws_ssoadmin_permission_set" "this" {
@@ -45,15 +41,15 @@ resource "aws_ssoadmin_permissions_boundary_attachment" "customer" {
 }
 
 #
-## Assign the permissionset to the accounts 
-#
-resource "aws_ssoadmin_account_assignment" "this" {
-  for_each = toset(var.assignment.targets)
+## Assign the permission set to the groups 
+# 
+module "assignments" {
+  source = "./modules/assignment"
 
+  for_each           = { for x in var.assignments : x.principal_id => x }
   instance_arn       = var.instance_arn
   permission_set_arn = aws_ssoadmin_permission_set.this.arn
-  principal_id       = var.assignment.principal_id
-  principal_type     = "GROUP"
-  target_id          = each.value
-  target_type        = "AWS_ACCOUNT"
+  principal_id       = each.value.principal_id
+  principal_type     = each.value.principal_type
+  targets            = each.value.targets
 }

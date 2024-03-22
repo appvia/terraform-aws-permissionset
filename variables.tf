@@ -23,16 +23,14 @@ variable "session_duration" {
   default     = "PT2H"
 }
 
-variable "assignment" {
-  description = "An optional list of accounts to assign the permission"
-  type = object({
-    principal_id = string
-    targets      = list(string)
-  })
-  default = {
-    principal_id = ""
-    targets      = []
-  }
+variable "assignments" {
+  description = "An optional list of assignments to be attached to the permission set"
+  type = list(object({
+    principal_id   = string
+    principal_type = optional(string, "GROUP")
+    targets        = list(string)
+  }))
+  default = []
 }
 
 variable "instance_arn" {

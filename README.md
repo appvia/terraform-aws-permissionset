@@ -14,13 +14,14 @@
 
 ## Modules
 
-No modules.
+| Name | Source | Version |
+|------|--------|---------|
+| <a name="module_assignments"></a> [assignments](#module\_assignments) | ./modules/assignment | n/a |
 
 ## Resources
 
 | Name | Type |
 |------|------|
-| [aws_ssoadmin_account_assignment.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssoadmin_account_assignment) | resource |
 | [aws_ssoadmin_permission_set.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssoadmin_permission_set) | resource |
 | [aws_ssoadmin_permissions_boundary_attachment.customer](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssoadmin_permissions_boundary_attachment) | resource |
 | [aws_ssoadmin_permissions_boundary_attachment.managed](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssoadmin_permissions_boundary_attachment) | resource |
@@ -29,7 +30,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_assignment"></a> [assignment](#input\_assignment) | An optional list of accounts to assign the permission | <pre>object({<br>    principal_id = string<br>    targets      = list(string)<br>  })</pre> | <pre>{<br>  "principal_id": "",<br>  "targets": []<br>}</pre> | no |
+| <a name="input_assignments"></a> [assignments](#input\_assignments) | An optional list of assignments to be attached to the permission set | <pre>list(object({<br>    principal_id   = string<br>    principal_type = optional(string, "GROUP")<br>    targets        = list(string)<br>  }))</pre> | `[]` | no |
 | <a name="input_customer_managed_policy_references"></a> [customer\_managed\_policy\_references](#input\_customer\_managed\_policy\_references) | The list of customer managed policy references to be attached to the permission set | <pre>list(object({<br>    name = string<br>    path = optional(string, "/")<br>  }))</pre> | `[]` | no |
 | <a name="input_description"></a> [description](#input\_description) | The description of this permission set to be created | `string` | n/a | yes |
 | <a name="input_instance_arn"></a> [instance\_arn](#input\_instance\_arn) | The arn of the instance to which the permission set is to be attached | `string` | n/a | yes |
