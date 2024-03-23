@@ -24,7 +24,7 @@ resource "aws_ssoadmin_managed_policy_attachment" "managed" {
 ## Attach any customer managed policies to the permissionset
 # 
 resource "aws_ssoadmin_customer_managed_policy_attachment" "customer" {
-  for_each = toset(var.customer_managed_policy_references)
+  for_each = { for x in var.customer_managed_policy_references : x.name => x }
 
   instance_arn       = var.instance_arn
   permission_set_arn = aws_ssoadmin_permission_set.this.arn
@@ -53,7 +53,7 @@ resource "aws_ssoadmin_permissions_boundary_attachment" "managed" {
 ## Attach any customer managed boundary policy to the permissionset 
 #
 resource "aws_ssoadmin_permissions_boundary_attachment" "customer" {
-  for_each = toset(var.customer_managed_boundary_policy_references)
+  for_each = { for x in var.customer_managed_boundary_policy_references : x.name => x }
 
   instance_arn       = var.instance_arn
   permission_set_arn = aws_ssoadmin_permission_set.this.arn
