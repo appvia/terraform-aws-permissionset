@@ -10,10 +10,36 @@ resource "aws_ssoadmin_permission_set" "this" {
 }
 
 #
-## Attach any managed policy to the permissionset 
+## Attach any managed policies to the permissionset 
+#
+resource "aws_ssoadmin_managed_policy_attachment" "managed" {
+  for_each = toset(var.managed_policy_arns)
+
+  instance_arn       = var.instance_arn
+  managed_policy_arn = each.value
+  permission_set_arn = aws_ssoadmin_permission_set.this.arn
+}
+
+#
+## Attach any customer managed policies to the permissionset
+# 
+resource "aws_ssoadmin_customer_managed_policy_attachment" "customer" {
+  for_each = toset(var.customer_managed_policy_references)
+
+  instance_arn       = var.instance_arn
+  permission_set_arn = aws_ssoadmin_permission_set.this.arn
+
+  customer_managed_policy_reference {
+    name = each.value.name
+    path = each.value.path
+  }
+}
+
+#
+## Attach any boundary policy to the permissionset 
 #
 resource "aws_ssoadmin_permissions_boundary_attachment" "managed" {
-  for_each = toset(var.managed_policy_arns)
+  for_each = toset(var.managed_boundary_policy_arns)
 
   instance_arn       = var.instance_arn
   permission_set_arn = aws_ssoadmin_permission_set.this.arn
@@ -24,10 +50,10 @@ resource "aws_ssoadmin_permissions_boundary_attachment" "managed" {
 }
 
 #
-## Attach any customer managed policy to the permissionset 
+## Attach any customer managed boundary policy to the permissionset 
 #
 resource "aws_ssoadmin_permissions_boundary_attachment" "customer" {
-  for_each = { for p in var.customer_managed_policy_references : p.name => p }
+  for_each = toset(var.customer_managed_boundary_policy_references)
 
   instance_arn       = var.instance_arn
   permission_set_arn = aws_ssoadmin_permission_set.this.arn
