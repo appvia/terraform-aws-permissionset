@@ -1,3 +1,66 @@
+# Permission Set
+
+This module can be used to manage permission sets and assignments within AWS Identity Center. Permission sets can use both managed and customer managed policies to define permissions. Note this module does not create the custom policies in the target accounts, it is assumed to be performed by another function.
+
+## Usage
+
+The following example will provision a permission set with a managed policy and a customer managed policy attached to it, assigning the permission set to two groups.
+
+````hcl
+data "aws_ssoadmin_instances" "this" {}
+
+locals {
+  instance_arn      = tolist(data.aws_ssoadmin_instances.this.arns)[0]
+}
+
+# Lookup all the sso groups
+data "aws_identitystore_group" "groups" {
+  for_each = toset(var.sso_groups)
+
+  identity_store_id = local.identity_store_id
+
+  alternate_identifier {
+    unique_attribute {
+      attribute_path  = "DisplayName"
+      attribute_value = each.value
+    }
+  }
+}
+
+module "permissionset" {
+  source  = "appvia/permissionset/aws"
+  version = "0.1.1"
+
+  name                = "MyPermissionSet"
+  description         = "Permission to do something in the cloud"
+  instance_arn        = local.instance_arn
+  tags                = var.tags
+
+  # The managed policy arns to be attached to the permission set
+  managed_policy_arns = [
+    "arn:aws:iam::aws:policy/ReadOnlyAccess"
+  ]
+
+  # The customer managed policy references to be attached to the permission set
+  customer_managed_policy_references = [
+    {
+      name = "MyCustomerManagedPolicy"
+    }
+  ]
+
+  assignments = [
+    {
+      principal_id = data.aws_identitystore_group.groups["Cloud Administrators"].group_id
+      targets      = var.another_list_of_accounts_ids
+    },
+    {
+      principal_id = data.aws_identitystore_group.groups["Cloud Solutions"].group_id
+      targets      = var.list_of_accounts_ids
+    },
+  ]
+}
+```hcl
+
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
@@ -49,3 +112,5 @@
 |------|-------------|
 | <a name="output_permission_set_arn"></a> [permission\_set\_arn](#output\_permission\_set\_arn) | The ARN of the permission set provisioned |
 <!-- END_TF_DOCS -->
+
+````
