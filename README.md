@@ -6,7 +6,7 @@ This module can be used to manage permission sets and assignments within AWS Ide
 
 The following example will provision a permission set with a managed policy and a customer managed policy attached to it, assigning the permission set to two groups.
 
-````hcl
+```hcl
 data "aws_ssoadmin_instances" "this" {}
 
 locals {
@@ -59,7 +59,7 @@ module "permissionset" {
     },
   ]
 }
-```hcl
+```
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
@@ -113,4 +113,6 @@ module "permissionset" {
 | <a name="output_permission_set_arn"></a> [permission\_set\_arn](#output\_permission\_set\_arn) | The ARN of the permission set provisioned |
 <!-- END_TF_DOCS -->
 
-````
+```
+
+```
