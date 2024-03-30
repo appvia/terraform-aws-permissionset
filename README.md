@@ -1,4 +1,6 @@
-# Permission Set
+![Github Actions](../../actions/workflows/terraform.yml/badge.svg)
+
+# Terraform AWS Permission Set
 
 This module can be used to manage permission sets and assignments within AWS Identity Center. Permission sets can use both managed and customer managed policies to define permissions. Note this module does not create the custom policies in the target accounts, it is assumed to be performed by another function.
 
@@ -73,7 +75,7 @@ module "permissionset" {
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.41.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 5.0 |
 
 ## Modules
 
@@ -95,16 +97,16 @@ module "permissionset" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_description"></a> [description](#input\_description) | The description of this permission set to be created | `string` | n/a | yes |
+| <a name="input_instance_arn"></a> [instance\_arn](#input\_instance\_arn) | The arn of the instance to which the permission set is to be attached | `string` | n/a | yes |
+| <a name="input_name"></a> [name](#input\_name) | The name of this permission set to be created | `string` | n/a | yes |
+| <a name="input_tags"></a> [tags](#input\_tags) | The tags to be attached to the permission set | `map(string)` | n/a | yes |
 | <a name="input_assignments"></a> [assignments](#input\_assignments) | An optional list of assignments to be attached to the permission set | <pre>list(object({<br>    principal_id   = string<br>    principal_type = optional(string, "GROUP")<br>    targets        = list(string)<br>  }))</pre> | `[]` | no |
 | <a name="input_customer_managed_boundary_policy_references"></a> [customer\_managed\_boundary\_policy\_references](#input\_customer\_managed\_boundary\_policy\_references) | The list of customer managed boundary policy references to be attached to the permission set | <pre>list(object({<br>    name = string<br>    path = optional(string, "/")<br>  }))</pre> | `[]` | no |
 | <a name="input_customer_managed_policy_references"></a> [customer\_managed\_policy\_references](#input\_customer\_managed\_policy\_references) | The list of customer managed policy references to be attached to the permission set | <pre>list(object({<br>    name = string<br>    path = optional(string, "/")<br>  }))</pre> | `[]` | no |
-| <a name="input_description"></a> [description](#input\_description) | The description of this permission set to be created | `string` | n/a | yes |
-| <a name="input_instance_arn"></a> [instance\_arn](#input\_instance\_arn) | The arn of the instance to which the permission set is to be attached | `string` | n/a | yes |
 | <a name="input_managed_boundary_policy_arns"></a> [managed\_boundary\_policy\_arns](#input\_managed\_boundary\_policy\_arns) | The list of managed boundary policy arns to be attached to the permission set | `list(string)` | `[]` | no |
 | <a name="input_managed_policy_arns"></a> [managed\_policy\_arns](#input\_managed\_policy\_arns) | The list of managed policy arns to be attached to the permission set | `list(string)` | `[]` | no |
-| <a name="input_name"></a> [name](#input\_name) | The name of this permission set to be created | `string` | n/a | yes |
 | <a name="input_session_duration"></a> [session\_duration](#input\_session\_duration) | The duration of the session | `string` | `"PT2H"` | no |
-| <a name="input_tags"></a> [tags](#input\_tags) | The tags to be attached to the permission set | `map(string)` | n/a | yes |
 
 ## Outputs
 
