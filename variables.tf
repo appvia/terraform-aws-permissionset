@@ -8,6 +8,12 @@ variable "assignments" {
   default = []
 }
 
+variable "customer_managed_inline_policies" {
+  description = "The list of customer managed inline policies to be attached to the permission set"
+  type        = map(string)
+  default     = {}
+}
+
 variable "customer_managed_boundary_policy_references" {
   description = "The list of customer managed boundary policy references to be attached to the permission set"
   type = list(object({

@@ -10,7 +10,7 @@
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.43.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.0.0 |
 
 ## Modules
 
@@ -31,8 +31,8 @@
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_sso_groups"></a> [sso\_groups](#input\_sso\_groups) | List of SSO groups to be retreived | `list(string)` | `[]` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | A map of tags to add to all resources | `map(string)` | n/a | yes |
+| <a name="input_sso_groups"></a> [sso\_groups](#input\_sso\_groups) | List of SSO groups to be retreived | `list(string)` | `[]` | no |
 
 ## Outputs
 
