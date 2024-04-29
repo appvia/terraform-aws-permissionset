@@ -29,16 +29,27 @@ locals {
   }
 }
 
-#
 ## Define the permission set
-#
 module "billing_viewer" {
   source = "../.."
 
-  name         = "BillingViewer"
+  name         = "MyTestPermissionSet"
   description  = "Permissons to view only billing information"
   tags         = var.tags
   instance_arn = local.instance_arn
+
+  customer_managed_inline_policies = {
+    "additional" = jsonencode({
+      Version = "2012-10-17"
+      Statement = [
+        {
+          Effect   = "Allow"
+          Action   = "aws-portal:ViewBilling"
+          Resource = "*"
+        },
+      ]
+    })
+  }
 
   managed_policy_arns = [
     "arn:aws:iam::aws:policy/AWSBillingConductorReadOnlyAccess",
@@ -48,8 +59,8 @@ module "billing_viewer" {
 
   assignments = [
     {
-      principal_id = data.aws_identitystore_group.groups["Cloud Billing"].group_id
-      targets      = [local.accounts["appvia.io"]]
+      principal_id = data.aws_identitystore_group.groups["Cloud Administrators"].group_id
+      targets      = [local.accounts["appvia-io"]]
     }
   ]
 }
