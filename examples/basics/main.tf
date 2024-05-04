@@ -38,18 +38,16 @@ module "billing_viewer" {
   tags         = var.tags
   instance_arn = local.instance_arn
 
-  customer_managed_inline_policies = {
-    "additional" = jsonencode({
-      Version = "2012-10-17"
-      Statement = [
-        {
-          Effect   = "Allow"
-          Action   = "aws-portal:ViewBilling"
-          Resource = "*"
-        },
-      ]
-    })
-  }
+  customer_managed_inline_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect   = "Allow"
+        Action   = "aws-portal:ViewBilling"
+        Resource = "*"
+      },
+    ]
+  })
 
   managed_policy_arns = [
     "arn:aws:iam::aws:policy/AWSBillingConductorReadOnlyAccess",

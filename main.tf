@@ -59,9 +59,9 @@ resource "aws_ssoadmin_permissions_boundary_attachment" "customer" {
 
 ## Assign any inline policies to the permissionset 
 resource "aws_ssoadmin_permission_set_inline_policy" "customer" {
-  for_each = var.customer_managed_inline_policies
+  count = var.customer_managed_inline_policy != null ? 1 : 0
 
-  inline_policy      = each.value
+  inline_policy      = var.customer_managed_inline_policy
   instance_arn       = var.instance_arn
   permission_set_arn = aws_ssoadmin_permission_set.this.arn
 }
