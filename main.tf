@@ -4,6 +4,7 @@ resource "aws_ssoadmin_permission_set" "this" {
   instance_arn     = var.instance_arn
   name             = var.name
   description      = var.description
+  relay_state      = var.relay_state
   session_duration = var.session_duration
   tags             = var.tags
 }

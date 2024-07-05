@@ -32,6 +32,12 @@ variable "customer_managed_policy_references" {
   default = []
 }
 
+variable "relay_state" {
+  description = "The relay state of the permission set, used to redirect users to a specific page after login"
+  type        = string
+  default     = null
+}
+
 variable "description" {
   description = "The description of this permission set to be created"
   type        = string

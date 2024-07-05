@@ -108,6 +108,7 @@ module "permissionset" {
 | <a name="input_customer_managed_policy_references"></a> [customer\_managed\_policy\_references](#input\_customer\_managed\_policy\_references) | The list of customer managed policy references to be attached to the permission set | <pre>list(object({<br>    name = string<br>    path = optional(string, "/")<br>  }))</pre> | `[]` | no |
 | <a name="input_managed_boundary_policy_arns"></a> [managed\_boundary\_policy\_arns](#input\_managed\_boundary\_policy\_arns) | The list of managed boundary policy arns to be attached to the permission set | `list(string)` | `[]` | no |
 | <a name="input_managed_policy_arns"></a> [managed\_policy\_arns](#input\_managed\_policy\_arns) | The list of managed policy arns to be attached to the permission set | `list(string)` | `[]` | no |
+| <a name="input_relay_state"></a> [relay\_state](#input\_relay\_state) | The relay state of the permission set, used to redirect users to a specific page after login | `string` | `null` | no |
 | <a name="input_session_duration"></a> [session\_duration](#input\_session\_duration) | The duration of the session | `string` | `"PT2H"` | no |
 
 ## Outputs
