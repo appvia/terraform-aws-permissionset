@@ -55,6 +55,16 @@ module "billing_viewer" {
     "arn:aws:iam::aws:policy/CostOptimizationHubReadOnlyAccess",
   ]
 
+  managed_boundary_policy_arns = [
+    "arn:aws:iam::aws:policy/AWSBillingConductorReadOnlyAccess",
+  ]
+
+  customer_managed_boundary_policy_references = [
+    {
+      name = "MyBoundaryPolicy"
+    }
+  ]
+
   assignments = [
     {
       principal_id = data.aws_identitystore_group.groups["Cloud Administrators"].group_id
