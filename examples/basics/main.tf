@@ -59,11 +59,9 @@ module "billing_viewer" {
     "arn:aws:iam::aws:policy/AWSBillingConductorReadOnlyAccess",
   ]
 
-  customer_managed_boundary_policy_references = [
-    {
-      name = "MyBoundaryPolicy"
-    }
-  ]
+  customer_managed_boundary_policy_reference = {
+    name = "MyBoundaryPolicy"
+  }
 
   assignments = [
     {
