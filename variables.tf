@@ -14,13 +14,13 @@ variable "customer_managed_inline_policy" {
   default     = null
 }
 
-variable "customer_managed_boundary_policy_references" {
-  description = "The list of customer managed boundary policy references to be attached to the permission set"
-  type = list(object({
+variable "customer_managed_boundary_policy_reference" {
+  description = "Customer managed boundary policy reference to be attached to the permission set"
+  type = object({
     name = string
     path = optional(string, "/")
-  }))
-  default = []
+  })
+  default = null
 }
 
 variable "customer_managed_policy_references" {
