@@ -45,15 +45,15 @@ resource "aws_ssoadmin_permissions_boundary_attachment" "managed" {
 
 ## Attach any customer managed boundary policy to the permissionset 
 resource "aws_ssoadmin_permissions_boundary_attachment" "customer" {
-  for_each = { for x in var.customer_managed_boundary_policy_references : x.name => x }
+  count = var.customer_managed_boundary_policy_reference != null ? 1 : 0
 
   instance_arn       = var.instance_arn
   permission_set_arn = aws_ssoadmin_permission_set.this.arn
 
   permissions_boundary {
     customer_managed_policy_reference {
-      name = each.value.name
-      path = each.value.path
+      name = var.customer_managed_boundary_policy_reference.name
+      path = var.customer_managed_boundary_policy_reference.path
     }
   }
 }
